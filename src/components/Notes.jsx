@@ -2,7 +2,18 @@ import NoteCard from "./NoteCard.jsx";
 import { useState } from "react";
 
 function Notes() {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState([
+    {
+      id: 1,    
+      title: "Review map and filter",
+      body: "Redo the TodoMVC steps without looking at the guide."
+    },
+    {
+      id: 2,
+      title: "Prepare for the quiz",
+      body: "Practice writing one handler for many inputs."
+    }
+  ]);
   const [search, setSearch] = useState("");
   const [newNote, setNewNote] = useState({
     title: "",
