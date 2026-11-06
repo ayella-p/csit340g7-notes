@@ -2,18 +2,19 @@ import NoteCard from "./NoteCard.jsx";
 import { useState } from "react";
 
 function Notes() {
-  const [notes, setNotes] = useState([
-    {
-      id: crypto.randomUUID(),
-      title: "Review map and filter",
-      body: "Redo the TodoMVC steps without looking at the guide.",
-    },
-    {
-      id: crypto.randomUUID(),
-      title: "Prepare for the quiz",
-      body: "Practice writing one handler for many inputs.",
-    },
-  ]);
+//   const [notes, setNotes] = useState([
+//     {
+//       id: crypto.randomUUID(),
+//       title: "Review map and filter",
+//       body: "Redo the TodoMVC steps without looking at the guide.",
+//     },
+//     {
+//       id: crypto.randomUUID(),
+//       title: "Prepare for the quiz",
+//       body: "Practice writing one handler for many inputs.",
+//     },
+//   ]);
+  const [notes, setNotes] = useState([])
 
   const [newNote, setNewNote] = useState({
     title: "",
@@ -107,6 +108,9 @@ function Notes() {
             </li>
           ))}
         </ul>
+        {notes.length === 0 && (
+            <p className="text-lg text-[#949494]">No notes found</p>
+        )}
       </section>
     </div>
   );
