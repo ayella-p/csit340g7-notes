@@ -1,5 +1,5 @@
 import NoteCard from "./NoteCard.jsx";
-import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 
 const startingNotes = [
   {
@@ -20,9 +20,9 @@ function Notes() {
     return saved ? JSON.parse(saved) : startingNotes;
   });
   const [search, setSearch] = useState("");
-  const [newNote, setNewNote] = useState({
-    title: "",
-    body: "",
+  const [newNote, setNewNote] = useState(() => {
+    const saved = localStorage.getItem("draft");
+    return saved ? JSON.parse(saved) : { title: "", body: "" };
   });
   const titleRef = useRef(null);
 
@@ -58,12 +58,16 @@ function Notes() {
     };
     setNotes([...notes, newNotes]);
     setNewNote({ title: "", body: "" });
+    localStorage.removeItem("draft");
     titleRef.current.focus();
   }
 
-  const handleDelete = useCallback((id) => {
-    setNotes(notes.filter((note) => note.id !== id));
-  }, [notes])
+  const handleDelete = useCallback(
+    (id) => {
+      setNotes(notes.filter((note) => note.id !== id));
+    },
+    [notes],
+  );
 
   const filteredNotes = useMemo(() => {
     return notes.filter((note) =>
