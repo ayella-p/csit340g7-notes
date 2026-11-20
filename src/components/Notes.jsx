@@ -1,5 +1,5 @@
 import NoteCard from "./NoteCard.jsx";
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 
 const startingNotes = [
   {
@@ -61,15 +61,15 @@ function Notes() {
     titleRef.current.focus();
   }
 
-  function handleDelete(id) {
+  const handleDelete = useCallback((id) => {
     setNotes(notes.filter((note) => note.id !== id));
-  }
+  }, [notes])
 
   const filteredNotes = useMemo(() => {
     return notes.filter((note) =>
-      note.title.toLowerCase().includes(search.toLowerCase())
-    )
-  }, [notes, search])
+      note.title.toLowerCase().includes(search.toLowerCase()),
+    );
+  }, [notes, search]);
   return (
     <div className="grid min-h-screen grid-cols-[420px_1fr]">
       <aside className="sticky top-0 flex h-screen flex-col gap-5 bg-white px-8 py-9 shadow-[0_2px_4px_0_rgba(0,0,0,0.2),0_25px_50px_0_rgba(0,0,0,0.1)]">
@@ -123,14 +123,12 @@ function Notes() {
               key={index}
               className="relative min-h-32 bg-white px-6 py-5 shadow-[0_2px_4px_0_rgba(0,0,0,0.2),0_25px_50px_0_rgba(0,0,0,0.1)]"
             >
-              <NoteCard title={note.title} body={note.body} />
-              <button
-                onClick={() => handleDelete(note.id)}
-                type="button"
-                className="absolute top-4 right-5 cursor-pointer text-[26px] leading-none text-[#949494] hover:text-[#c18585]"
-              >
-                ×
-              </button>
+              <NoteCard
+                id={note.id}
+                title={note.title}
+                body={note.body}
+                onDelete={handleDelete}
+              />
             </li>
           ))}
         </ul>
